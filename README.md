@@ -1,6 +1,6 @@
-# Incremental Application Event ETL Demonstration
+# Application Event ETL Demo
 ## Scope
-Python/PostgreSQL project processing CSV application events. The repository's historical name does not describe its current inputs: no regulatory-document parsing is implemented in the inspected modules.
+Python/PostgreSQL demonstration processing CSV application events with incremental extraction, transformations, raw and curated tables, and run tracking.
 
 ## Included implementation
 - `data/raw/events.csv`: small example input.
@@ -15,7 +15,14 @@ Python/PostgreSQL project processing CSV application events. The repository's hi
 Raw insert uses event_id conflict handling. Curated upsert updates user_id and amount on an existing event; it does not update every event attribute. Pipeline execution records counts/status and advances a timestamp watermark after processing. OperationalError triggers bounded exponential-backoff retries.
 
 ## Running
-Install requirements, configure settings/database credentials locally, create the PostgreSQL schema using the SQL file, then run the module from the repository root:
+Use a disposable local PostgreSQL database. Install `requirements.txt`, create the schema with `sql/001_create_tables.sql`, and set these required environment variables (or use an untracked local `.env`):
+
+- `DATABASE_URL`: PostgreSQL connection URL.
+- `PIPELINE_NAME`: run-tracking identifier.
+- `SOURCE_NAME`: source/watermark identifier.
+- `RAW_DATA_PATH`: `data/raw/events.csv`.
+
+Optional settings are `LATE_ARRIVAL_GRACE_MINUTES` (60), `FAIL_MODE` (`none`), and `MAX_RETRIES` (4). Then run from the repository root:
 ```bash
 python -m src.etl
 ```
