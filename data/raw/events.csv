@@ -1,4 +1,4 @@
-event_id,event_ts,source,event_type,payload_json
-e1,2025-01-01T00:00:00Z,app,click,"{""user_id"":""u1"",""amount"":10}"
-e2,2025-01-01T00:05:00Z,app,purchase,"{""user_id"":""u1"",""amount"":25}"
+event_id,event_ts,source,event_type,user_id,amount
+e1,2025-01-01T00:00:00Z,app,click,u1,10
+e2,2025-01-01T00:05:00Z,app,purchase,u1,25
 e3,2024-12-31T17:30:00Z,app,purchase,u2,50
